@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
 import Logo from "@/components/Logo";
+import Image from "next/image";
 
 export default function LandingPage() {
   const { user } = useAuthStore();
@@ -48,128 +49,89 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* ─── HERO ───────────────────────────────────────────────────────── */}
-      <section style={{ padding: "80px 48px 64px", textAlign: "center" }}>
+      {/* ─── HERO ─────────────────────────────────────────── */}
+      <section style={{ padding: "64px 48px", borderTop: "none" }}>
         <div style={{
-          display: "inline-block",
-          background: "rgba(212,175,55,0.1)", color: "#D4AF37",
-          border: "1px solid rgba(212,175,55,0.2)",
-          borderRadius: "20px", padding: "4px 16px",
-          fontSize: "12px", fontWeight: "600", letterSpacing: "0.06em",
-          textTransform: "uppercase", marginBottom: "24px",
+          maxWidth: "1100px", margin: "0 auto",
+          display: "grid", gridTemplateColumns: "1fr 1fr",
+          gap: "48px", alignItems: "center",
         }}>
-          Fantasy fotbal pro kamarády
-        </div>
 
-        <h1 style={{
-          fontFamily: "var(--font-display)",
-          fontSize: "clamp(36px, 6vw, 64px)",
-          fontWeight: "800", lineHeight: "1.05",
-          letterSpacing: "-0.02em", marginBottom: "20px",
-        }}>
-          Vsaďte se.<br />
-          <span style={{ color: "#D4AF37" }}>Draftujte. Sledujte.</span>
-        </h1>
-
-        <p style={{
-          fontSize: "18px", color: "#9B8E7B", lineHeight: "1.65",
-          maxWidth: "480px", margin: "0 auto 16px",
-        }}>
-          Vyberte si hráče z reálných zápasů, sledujte góly a automaticky počítejte kdo komu dluží.
-        </p>
-
-        <p style={{
-          fontSize: "14px", color: "#6B5F4F",
-          maxWidth: "400px", margin: "0 auto 36px",
-        }}>
-          Dva módy: <span style={{ color: "#D4AF37" }}>čuník</span> (průběžné sázení za každý gól)
-          nebo <span style={{ color: "#D4AF37" }}>klasická sázka</span> (vítěz bere vše).
-        </p>
-
-        <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-          <Link href="/register" style={{
-            background: "#D4AF37", color: "#0A0A0A",
-            border: "none", borderRadius: "10px",
-            padding: "14px 32px", fontSize: "16px", fontWeight: "800",
-            textDecoration: "none", display: "inline-block",
-          }}>
-            Vytvořit účet zdarma
-          </Link>
-          <Link href="/game/join" style={{
-            background: "transparent", color: "#F5F0E8",
-            border: "1px solid rgba(212,175,55,0.2)", borderRadius: "10px",
-            padding: "14px 28px", fontSize: "16px", fontWeight: "600",
-            textDecoration: "none", display: "inline-block",
-          }}>
-            Mám kód místnosti →
-          </Link>
-        </div>
-
-        {/* App mockup */}
-        <div style={{
-          maxWidth: "680px", margin: "48px auto 0",
-          background: "#0E0E0E", border: "1px solid rgba(212,175,55,0.1)",
-          borderRadius: "14px", overflow: "hidden",
-        }}>
-          {/* Browser bar */}
-          <div style={{
-            background: "#161616", borderBottom: "1px solid rgba(212,175,55,0.07)",
-            padding: "10px 16px", display: "flex", alignItems: "center", gap: "8px",
-          }}>
-            {["#ff5f57","#ffbd2e","#28c840"].map((c) => (
-              <div key={c} style={{ width: "10px", height: "10px", borderRadius: "50%", background: c }} />
-            ))}
-            <div style={{
-              background: "#1E1E1E", borderRadius: "4px",
-              padding: "3px 14px", fontSize: "11px", color: "#6B5F4F",
-              flex: 1, maxWidth: "260px", margin: "0 auto",
-            }}>
-              oberkamose.app/game/room/A7K2
-            </div>
+          {/* Left — mascot */}
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <Image
+              src="/mascot.png"
+              alt="Ober Kamoše maskot"
+              width={420}
+              height={420}
+              style={{ width: "100%", maxWidth: "420px", height: "auto", filter: "drop-shadow(0 20px 60px rgba(212,175,55,0.25))" }}
+              priority
+            />
           </div>
-          {/* Mock content */}
-          <div style={{ padding: "20px" }}>
-            <div style={{ fontSize: "11px", color: "#6B5F4F", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>
-              Živá hra · Arsenal vs Chelsea
+
+          {/* Right — text + CTA */}
+          <div>
+            <div style={{
+              display: "inline-block",
+              background: "rgba(212,175,55,0.1)", color: "#D4AF37",
+              border: "1px solid rgba(212,175,55,0.2)",
+              borderRadius: "20px", padding: "4px 16px",
+              fontSize: "12px", fontWeight: "600",
+              letterSpacing: "0.06em", textTransform: "uppercase",
+              marginBottom: "24px",
+            }}>
+              Fantasy fotbal pro kamarády
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px", marginBottom: "14px" }}>
-              {[
-                { label: "Pepa platí", val: "350 Kč", color: "#f87171" },
-                { label: "Honza platí", val: "150 Kč", color: "#f87171" },
-                { label: "Čuník celkem", val: "500 Kč", color: "#D4AF37" },
-              ].map((c) => (
-                <div key={c.label} style={{ background: "#161616", border: "1px solid rgba(212,175,55,0.08)", borderRadius: "8px", padding: "12px" }}>
-                  <div style={{ fontSize: "10px", color: "#6B5F4F", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "4px" }}>{c.label}</div>
-                  <div style={{ fontSize: "20px", fontWeight: "800", fontFamily: "var(--font-display)", color: c.color }}>{c.val}</div>
-                </div>
-              ))}
-            </div>
-            {[
-              { name: "Saka", team: "Arsenal", g: 2, a: 1, color: "#22c55e", init: "PE" },
-              { name: "Palmer", team: "Chelsea", g: 1, a: 0, color: "#3b82f6", init: "HO" },
-              { name: "Havertz", team: "Arsenal", g: 0, a: 0, color: "#22c55e", init: "PE" },
-            ].map((p) => (
-              <div key={p.name} style={{
-                display: "flex", alignItems: "center", justifyContent: "space-between",
-                padding: "8px 10px", background: "#1E1E1E", borderRadius: "6px", marginBottom: "6px",
-                fontSize: "13px",
+
+            <h1 style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(32px, 5vw, 56px)",
+              fontWeight: "800", lineHeight: "1.05",
+              letterSpacing: "-0.02em", marginBottom: "20px",
+            }}>
+              Vsaďte se.<br />
+              <span style={{ color: "#D4AF37" }}>Draftujte.<br />Sledujte.</span>
+            </h1>
+
+            <p style={{
+              fontSize: "17px", color: "#9B8E7B",
+              lineHeight: "1.65", marginBottom: "12px",
+              maxWidth: "440px",
+            }}>
+              Vyberte si hráče z reálných zápasů, sledujte góly
+              a automaticky počítejte kdo komu dluží.
+            </p>
+
+            <p style={{
+              fontSize: "14px", color: "#6B5F4F",
+              marginBottom: "36px", maxWidth: "400px",
+            }}>
+              Dva módy:{" "}
+              <span style={{ color: "#D4AF37" }}>čuník</span>
+              {" "}(průběžné sázení za každý gól) nebo{" "}
+              <span style={{ color: "#D4AF37" }}>klasická sázka</span>
+              {" "}(vítěz bere vše).
+            </p>
+
+            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+              <Link href="/register" style={{
+                background: "#D4AF37", color: "#0A0A0A",
+                borderRadius: "10px", padding: "14px 28px",
+                fontSize: "15px", fontWeight: "800",
+                textDecoration: "none", display: "inline-block",
               }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                  <div style={{
-                    width: "24px", height: "24px", borderRadius: "50%",
-                    background: p.color, display: "flex", alignItems: "center",
-                    justifyContent: "center", fontSize: "9px", fontWeight: "700", color: "#000",
-                  }}>{p.init}</div>
-                  <div>
-                    <div style={{ fontWeight: "600" }}>{p.name}</div>
-                    <div style={{ fontSize: "10px", color: "#6B5F4F" }}>{p.team}</div>
-                  </div>
-                </div>
-                <div style={{ fontFamily: "var(--font-display)", fontWeight: "800", color: (p.g + p.a) > 0 ? "#22c55e" : "#6B5F4F" }}>
-                  {p.g}G · {p.a}A
-                </div>
-              </div>
-            ))}
+                Vytvořit účet zdarma
+              </Link>
+              <Link href="/game/join" style={{
+                background: "transparent", color: "#F5F0E8",
+                border: "1px solid rgba(212,175,55,0.2)",
+                borderRadius: "10px", padding: "14px 24px",
+                fontSize: "15px", fontWeight: "600",
+                textDecoration: "none", display: "inline-block",
+              }}>
+                Mám kód místnosti →
+              </Link>
+            </div>
           </div>
         </div>
       </section>
