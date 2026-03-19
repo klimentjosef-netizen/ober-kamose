@@ -1,6 +1,6 @@
-import { GameStatus, DraftType, EventType, DebtStatus, GroupMemberRole } from "@prisma/client";
+import { GameStatus, DraftType, EventType, DebtStatus, GroupMemberRole, BetStatus } from "@prisma/client";
 
-export type { GameStatus, DraftType, EventType, DebtStatus, GroupMemberRole };
+export type { GameStatus, DraftType, EventType, DebtStatus, GroupMemberRole, BetStatus };
 
 // ─── AUTH ────────────────────────────────────────────────────────────────────
 
@@ -214,6 +214,39 @@ export interface JoinRoomPayload {
 export interface RejoinRoomPayload {
   roomCode: string;
   playerIndex: number;
+}
+
+// ─── BETS ─────────────────────────────────────────────────────────────────────
+
+export interface BetInfo {
+  id: string;
+  title: string;
+  description: string | null;
+  amount: number;
+  status: BetStatus;
+  createdAt: string;
+  resolvedAt: string | null;
+  createdBy: { id: string; username: string; avatarColor: string };
+  participants: BetParticipantInfo[];
+  group: { id: string; name: string };
+}
+
+export interface BetParticipantInfo {
+  id: string;
+  side: string;
+  isWinner: boolean | null;
+  user: { id: string; username: string; avatarColor: string };
+}
+
+export interface CreateBetRequest {
+  title: string;
+  description?: string;
+  amount: number;
+  participants: { userId: string; side: string }[];
+}
+
+export interface ResolveBetRequest {
+  winnerSide: string;
 }
 
 // ─── DEBT & STATS ─────────────────────────────────────────────────────────────

@@ -8,6 +8,7 @@ const DEV_USER = { username: "Developer", email: "dev@oberkamose.cz", avatarColo
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Přehled", icon: "▦" },
   { href: "/dashboard/groups", label: "Skupiny", icon: "◈" },
+  { href: "/dashboard/bets", label: "Sázky", icon: "🎲" },
   { href: "/dashboard/games", label: "Hry", icon: "⬡" },
   { href: "/dashboard/stats", label: "Statistiky", icon: "◎" },
 ];

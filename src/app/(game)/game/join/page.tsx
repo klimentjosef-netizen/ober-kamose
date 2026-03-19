@@ -1,11 +1,12 @@
 "use client";
 
+import { Suspense } from "react";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useGameStore } from "@/store/gameStore";
 import { useSocket } from "@/hooks/useSocket";
 
-export default function JoinGamePage() {
+function JoinGameInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const socket = useSocket();
@@ -61,5 +62,17 @@ export default function JoinGamePage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function JoinGamePage() {
+  return (
+    <Suspense fallback={
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div className="spinner" style={{ width: "32px", height: "32px" }} />
+      </div>
+    }>
+      <JoinGameInner />
+    </Suspense>
   );
 }

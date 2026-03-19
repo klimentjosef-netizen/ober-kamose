@@ -28,6 +28,8 @@ model User {
   chatMessages     ChatMessage[]
   draftPicks       DraftPick[]
   goalEvents       GoalEvent[]
+  createdBets      Bet[]         @relation("BetCreator")
+  betParticipations BetParticipant[]
 
   @@map("users")
 }
@@ -48,6 +50,7 @@ model Group {
   members GroupMember[]
   games   Game[]
   debts   Debt[]
+  bets    Bet[]
 
   @@map("groups")
 }
@@ -258,6 +261,50 @@ model DebtPayment {
   paidBy User @relation(fields: [paidById], references: [id])
 
   @@map("debt_payments")
+}
+
+// ─── BETS (general wagers) ────────────────────────────────────────────────────
+
+model Bet {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  amount      Int       @default(0)
+  status      BetStatus @default(OPEN)
+  resolvedAt  DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  groupId     String
+  createdById String
+  winnerId    String?
+  group       Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  createdBy   User   @relation("BetCreator", fields: [createdById], references: [id])
+
+  participants BetParticipant[]
+
+  @@map("bets")
+}
+
+model BetParticipant {
+  id       String   @id @default(cuid())
+  side     String
+  isWinner Boolean?
+  joinedAt DateTime @default(now())
+
+  betId  String
+  userId String
+  bet    Bet  @relation(fields: [betId], references: [id], onDelete: Cascade)
+  user   User @relation(fields: [userId], references: [id])
+
+  @@unique([betId, userId])
+  @@map("bet_participants")
+}
+
+enum BetStatus {
+  OPEN
+  RESOLVED
+  CANCELLED
 }
 
 // ─── CHAT ────────────────────────────────────────────────────────────────────

@@ -12,6 +12,7 @@ export default function GroupDetailPage() {
   const [group, setGroup] = useState<any>(null);
   const [debts, setDebts] = useState<any[]>([]);
   const [members, setMembers] = useState<any[]>([]);
+  const [bets, setBets] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [showInvite, setShowInvite] = useState(false);
   const { toast, showToast, hideToast } = useToast();
@@ -19,16 +20,19 @@ export default function GroupDetailPage() {
   useEffect(() => {
     const load = async () => {
       try {
-        const [groupRes, debtRes] = await Promise.all([
+        const [groupRes, debtRes, betsRes] = await Promise.all([
           fetch("/api/groups", { credentials: "include" }),
           fetch(`/api/groups/${groupId}/debts`, { credentials: "include" }),
+          fetch(`/api/groups/${groupId}/bets`, { credentials: "include" }),
         ]);
         const groupData = await groupRes.json();
         const debtData = await debtRes.json();
+        const betsData = await betsRes.json();
         const found = groupData.groups?.find((g: any) => g.id === groupId);
         setGroup(found ?? null);
         setDebts(debtData.debts ?? []);
         setMembers(debtData.members ?? []);
+        setBets(betsData.bets ?? []);
       } finally {
         setLoading(false);
       }
@@ -179,6 +183,62 @@ export default function GroupDetailPage() {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Bets section */}
+      <div style={{ marginTop: "32px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "18px", fontWeight: "700" }}>
+            Sázky ({bets.filter((b: any) => b.status === "OPEN").length} aktivních)
+          </h2>
+          <Link href="/dashboard/bets" className="btn btn-ghost btn-sm">
+            Všechny sázky →
+          </Link>
+        </div>
+
+        {bets.length === 0 ? (
+          <div className="card" style={{ padding: "32px", textAlign: "center" }}>
+            <div style={{ fontSize: "28px", marginBottom: "8px" }}>🎲</div>
+            <div style={{ fontSize: "14px", color: "var(--text-secondary)" }}>Zatím žádné sázky v této skupině</div>
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            {bets.slice(0, 5).map((bet: any) => {
+              const isOpen = bet.status === "OPEN";
+              const sideGroups: Record<string, any[]> = {};
+              for (const p of bet.participants ?? []) {
+                if (!sideGroups[p.side]) sideGroups[p.side] = [];
+                sideGroups[p.side].push(p);
+              }
+              return (
+                <div key={bet.id} className="card" style={{ padding: "14px 18px", opacity: bet.status === "CANCELLED" ? 0.5 : 1 }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <div>
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <span style={{ fontWeight: "600", fontSize: "14px" }}>{bet.title}</span>
+                        {isOpen && <span className="badge badge-green" style={{ fontSize: "10px" }}>Aktivní</span>}
+                        {bet.status === "RESOLVED" && <span className="badge badge-amber" style={{ fontSize: "10px" }}>Uzavřeno</span>}
+                        {bet.status === "CANCELLED" && <span className="badge badge-gray" style={{ fontSize: "10px" }}>Zrušeno</span>}
+                      </div>
+                      <div style={{ fontSize: "12px", color: "var(--text-muted)", marginTop: "2px" }}>
+                        {Object.entries(sideGroups).map(([side, members]) => (
+                          <span key={side} style={{ marginRight: "12px" }}>
+                            <strong>{side}:</strong> {(members as any[]).map((m: any) => m.user.username).join(", ")}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    {bet.amount > 0 && (
+                      <span style={{ fontFamily: "var(--font-display)", fontWeight: "700", color: "var(--green)", fontSize: "15px" }}>
+                        {bet.amount} Kč
+                      </span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );
