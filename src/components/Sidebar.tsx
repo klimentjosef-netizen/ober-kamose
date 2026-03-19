@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/authStore";
+import { usePathname } from "next/navigation";
+
+const DEV_USER = { username: "Developer", email: "dev@oberkamose.cz", avatarColor: "#22c55e" };
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Přehled", icon: "▦" },
@@ -13,16 +14,8 @@ const NAV_ITEMS = [
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const router = useRouter();
-  const { user, clearUser } = useAuthStore();
-
-  const handleLogout = async () => {
-    await fetch("/api/auth/logout", { method: "POST", credentials: "include" });
-    clearUser();
-    router.push("/login");
-  };
-
-  const initials = user?.username?.slice(0, 2).toUpperCase() ?? "??";
+  const user = DEV_USER;
+  const initials = user.username.slice(0, 2).toUpperCase();
 
   return (
     <aside style={{
@@ -136,26 +129,19 @@ export default function Sidebar() {
         }}>
           <div
             className="avatar avatar-sm"
-            style={{ background: user?.avatarColor ?? "var(--green)", color: "#000", fontWeight: "700" }}
+            style={{ background: user.avatarColor, color: "#000", fontWeight: "700" }}
           >
             {initials}
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ fontSize: "13px", fontWeight: "600", color: "var(--text-primary)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-              {user?.username}
+              {user.username}
             </div>
             <div style={{ fontSize: "11px", color: "var(--text-muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-              {user?.email}
+              {user.email}
             </div>
           </div>
-          <button
-            onClick={handleLogout}
-            className="btn btn-ghost btn-icon"
-            title="Odhlásit se"
-            style={{ padding: "4px", fontSize: "14px", color: "var(--text-muted)" }}
-          >
-            ⏻
-          </button>
+          <span className="badge badge-green" style={{ fontSize: "9px" }}>DEV</span>
         </div>
       </div>
 
