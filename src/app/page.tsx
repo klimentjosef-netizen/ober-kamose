@@ -147,7 +147,7 @@ export default function HomePage() {
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "14px", maxWidth: "900px", margin: "0 auto" }}>
           {[
-            { icon: "⚽", title: "Reálné zápasy", desc: "Premier League, La Liga, Champions League." },
+            { icon: "⚽", title: "Reálné zápasy", desc: "Premier League, La Liga, Champions League. Denní aktualizace." },
             { icon: "🐍", title: "Snake draft", desc: "Férový výběr hráčů. Automatický los kdo začíná." },
             { icon: "🎲", title: "Vlastní sázky", desc: "Vsaď se o cokoli — výsledek zápasu, pivní kolo." },
             { icon: "💰", title: "Přehled dluhů", desc: "Kdo komu dluží. Čistá bilance přes celou sezónu." },
