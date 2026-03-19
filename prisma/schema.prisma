@@ -1,0 +1,277 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── USERS & AUTH ───────────────────────────────────────────────────────────
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  username     String   @unique
+  passwordHash String
+  avatarColor  String   @default("#22c55e")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  groupMemberships GroupMember[]
+  hostedGames      Game[]        @relation("GameHost")
+  gamePlayers      GamePlayer[]
+  sentDebts        Debt[]        @relation("DebtFrom")
+  receivedDebts    Debt[]        @relation("DebtTo")
+  debtPayments     DebtPayment[]
+  chatMessages     ChatMessage[]
+  draftPicks       DraftPick[]
+  goalEvents       GoalEvent[]
+
+  @@map("users")
+}
+
+// ─── GROUPS ─────────────────────────────────────────────────────────────────
+
+model Group {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  avatarColor String   @default("#22c55e")
+  inviteCode  String   @unique @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  members GroupMember[]
+  games   Game[]
+  debts   Debt[]
+
+  @@map("groups")
+}
+
+model GroupMember {
+  id       String          @id @default(cuid())
+  role     GroupMemberRole @default(MEMBER)
+  joinedAt DateTime        @default(now())
+
+  userId  String
+  groupId String
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  group   Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, groupId])
+  @@map("group_members")
+}
+
+enum GroupMemberRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+// ─── GAMES ──────────────────────────────────────────────────────────────────
+
+model Game {
+  id          String     @id @default(cuid())
+  roomCode    String     @unique
+  status      GameStatus @default(LOBBY)
+  draftType   DraftType  @default(MANUAL)
+  picksPerPlayer Int     @default(8)
+  betPerGoal  Int        @default(100)
+  betPerAssist Int       @default(50)
+  customBetDescription String?
+  startedAt   DateTime?
+  finishedAt  DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  hostId  String
+  groupId String?
+  host    User   @relation("GameHost", fields: [hostId], references: [id])
+  group   Group? @relation(fields: [groupId], references: [id])
+
+  // Relations
+  players      GamePlayer[]
+  selectedMatches GameMatch[]
+  allPlayers   FootballPlayer[]
+  draftPicks   DraftPick[]
+  goalEvents   GoalEvent[]
+  chatMessages ChatMessage[]
+  debts        Debt[]
+
+  @@map("games")
+}
+
+enum GameStatus {
+  LOBBY
+  DRAFT
+  ACTIVE
+  FINISHED
+}
+
+enum DraftType {
+  MANUAL
+  SNAKE
+}
+
+model GamePlayer {
+  id           String  @id @default(cuid())
+  playerIndex  Int
+  isOnline     Boolean @default(false)
+  isHost       Boolean @default(false)
+  joinedAt     DateTime @default(now())
+
+  gameId String
+  userId String
+  game   Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@unique([gameId, playerIndex])
+  @@unique([gameId, userId])
+  @@map("game_players")
+}
+
+// ─── MATCHES & PLAYERS ──────────────────────────────────────────────────────
+
+model GameMatch {
+  id         String  @id @default(cuid())
+  apiMatchId String?
+  isCustom   Boolean @default(false)
+  homeTeam   String
+  awayTeam   String
+  matchDate  DateTime?
+  competition String?
+
+  gameId String
+  game   Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  players FootballPlayer[]
+
+  @@map("game_matches")
+}
+
+model FootballPlayer {
+  id       String  @id @default(cuid())
+  name     String
+  team     String
+  position String?
+  isCustom Boolean @default(false)
+
+  gameId  String
+  matchId String
+  game    Game      @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  match   GameMatch @relation(fields: [matchId], references: [id], onDelete: Cascade)
+
+  draftedBy  DraftPick?
+  goalEvents GoalEvent[]
+
+  @@map("football_players")
+}
+
+// ─── DRAFT ──────────────────────────────────────────────────────────────────
+
+model DraftPick {
+  id          String   @id @default(cuid())
+  pickNumber  Int
+  playerIndex Int
+  pickedAt    DateTime @default(now())
+
+  gameId           String
+  userId           String
+  footballPlayerId String @unique
+  game             Game          @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  user             User          @relation(fields: [userId], references: [id])
+  footballPlayer   FootballPlayer @relation(fields: [footballPlayerId], references: [id], onDelete: Cascade)
+
+  @@map("draft_picks")
+}
+
+// ─── GOALS & EVENTS ─────────────────────────────────────────────────────────
+
+model GoalEvent {
+  id          String    @id @default(cuid())
+  eventType   EventType @default(GOAL)
+  playerIndex Int
+  playerName  String
+  team        String
+  minute      Int?
+  recordedAt  DateTime  @default(now())
+  undone      Boolean   @default(false)
+
+  gameId           String
+  scoredById       String
+  footballPlayerId String
+  game             Game           @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  scoredBy         User           @relation(fields: [scoredById], references: [id])
+  footballPlayer   FootballPlayer @relation(fields: [footballPlayerId], references: [id])
+
+  @@map("goal_events")
+}
+
+enum EventType {
+  GOAL
+  ASSIST
+}
+
+// ─── DEBTS ──────────────────────────────────────────────────────────────────
+
+model Debt {
+  id          String     @id @default(cuid())
+  amount      Int
+  description String?
+  status      DebtStatus @default(PENDING)
+  createdAt   DateTime   @default(now())
+  settledAt   DateTime?
+
+  gameId  String?
+  groupId String
+  fromId  String
+  toId    String
+  game    Game?  @relation(fields: [gameId], references: [id])
+  group   Group  @relation(fields: [groupId], references: [id])
+  from    User   @relation("DebtFrom", fields: [fromId], references: [id])
+  to      User   @relation("DebtTo", fields: [toId], references: [id])
+
+  payments DebtPayment[]
+
+  @@map("debts")
+}
+
+enum DebtStatus {
+  PENDING
+  PARTIAL
+  SETTLED
+}
+
+model DebtPayment {
+  id        String   @id @default(cuid())
+  amount    Int
+  note      String?
+  paidAt    DateTime @default(now())
+
+  debtId String
+  paidById String
+  debt   Debt @relation(fields: [debtId], references: [id], onDelete: Cascade)
+  paidBy User @relation(fields: [paidById], references: [id])
+
+  @@map("debt_payments")
+}
+
+// ─── CHAT ────────────────────────────────────────────────────────────────────
+
+model ChatMessage {
+  id          String   @id @default(cuid())
+  text        String
+  playerIndex Int
+  sentAt      DateTime @default(now())
+
+  gameId String
+  userId String
+  game   Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@map("chat_messages")
+}
