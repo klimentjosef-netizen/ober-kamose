@@ -182,7 +182,7 @@ export default function BetsPage() {
 
               {/* Title */}
               <div>
-                <label className="input-label">O co se vsadíte?</label>
+                <label className="input-label">O co se vsadíš?</label>
                 <input className="input" value={title} onChange={(e) => setTitle(e.target.value)}
                   placeholder="Např. Kdo vyhraje El Clásico" required autoFocus />
               </div>

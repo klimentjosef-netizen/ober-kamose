@@ -38,7 +38,7 @@ export default function RegisterPage() {
       setUser(data.user, data.token);
       router.push("/dashboard");
     } catch {
-      setError("Chyba připojení. Zkus to znovu.");
+      setError("Chyba připojení. Zkuste to znovu.");
     } finally {
       setLoading(false);
     }
@@ -140,7 +140,7 @@ export default function RegisterPage() {
               <input
                 className="input"
                 type="email"
-                placeholder="tvuj@email.cz"
+                placeholder="tvůj@email.cz"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required

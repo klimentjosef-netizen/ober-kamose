@@ -4,7 +4,7 @@ import AuthProvider from "@/components/AuthProvider";
 
 export const metadata: Metadata = {
   title: "Ober Kamoše",
-  description: "Fantasy fotbal sázení s kamarády",
+  description: "Fantasy fotbalové sázky s kamarády",
   icons: { icon: "/favicon.ico" },
 };
 

@@ -39,7 +39,7 @@ export default function GamesPage() {
           Začni svou první hru
         </div>
         <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginBottom: "24px", maxWidth: "400px", margin: "0 auto 24px" }}>
-          Vytvoř místnost, pozvi kamarády, vydraftujte hráče a sledujte góly v reálném čase
+          Vytvoř místnost, pozvi kamarády, vydraftuj hráče a sleduj góly v reálném čase
         </p>
         <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
           <Link href="/game/new" className="btn btn-primary btn-lg">
