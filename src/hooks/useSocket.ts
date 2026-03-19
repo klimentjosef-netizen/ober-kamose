@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { io, Socket } from "socket.io-client";
 import { useAuthStore } from "@/store/authStore";
 import { useGameStore } from "@/store/gameStore";
@@ -20,10 +20,11 @@ export function useSocket() {
     if (!token || initialized.current) return;
     initialized.current = true;
 
-    const socket = io(process.env.NEXT_PUBLIC_APP_URL ?? "", {
+    // Connect to same origin (empty string = current host)
+    const socket = io({
       auth: { token },
       transports: ["websocket", "polling"],
-      reconnectionAttempts: 5,
+      reconnectionAttempts: 10,
       reconnectionDelay: 1000,
     });
 
@@ -32,6 +33,10 @@ export function useSocket() {
     socket.on("connect", () => {
       setConnected(true);
       console.log("[socket] connected:", socket.id);
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("[socket] connect error:", err.message);
     });
 
     socket.on("disconnect", () => {

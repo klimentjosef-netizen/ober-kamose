@@ -66,13 +66,13 @@ export default function DashboardPage() {
           <div className="stat-value">{loading ? "..." : groups.length}</div>
         </div>
         <div className="stat-card">
-          <div className="stat-label">Dluhuji celkem</div>
+          <div className="stat-label">Dlužím celkem</div>
           <div className="stat-value" style={{ color: totalDebt ? "#f87171" : "var(--text-primary)" }}>
             {loading ? "..." : `${totalDebt} Kč`}
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-label">Dluhují mi</div>
+          <div className="stat-label">Dluží mi</div>
           <div className="stat-value stat-value-green">
             {loading ? "..." : `${totalOwed} Kč`}
           </div>

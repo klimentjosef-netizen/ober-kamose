@@ -17,28 +17,73 @@ export default function GroupDetailPage() {
   const [showInvite, setShowInvite] = useState(false);
   const { toast, showToast, hideToast } = useToast();
 
+  // User search
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searching, setSearching] = useState(false);
+  const [showAddMember, setShowAddMember] = useState(false);
+
+  const loadData = async () => {
+    try {
+      const [groupRes, debtRes, betsRes] = await Promise.all([
+        fetch("/api/groups", { credentials: "include" }),
+        fetch(`/api/groups/${groupId}/debts`, { credentials: "include" }),
+        fetch(`/api/groups/${groupId}/bets`, { credentials: "include" }),
+      ]);
+      const groupData = await groupRes.json();
+      const debtData = await debtRes.json();
+      const betsData = await betsRes.json();
+      const found = groupData.groups?.find((g: any) => g.id === groupId);
+      setGroup(found ?? null);
+      setDebts(debtData.debts ?? []);
+      setMembers(debtData.members ?? []);
+      setBets(betsData.bets ?? []);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => { loadData(); }, [groupId]);
+
+  // Debounced user search
   useEffect(() => {
-    const load = async () => {
+    if (searchQuery.length < 2) { setSearchResults([]); return; }
+    const timeout = setTimeout(async () => {
+      setSearching(true);
       try {
-        const [groupRes, debtRes, betsRes] = await Promise.all([
-          fetch("/api/groups", { credentials: "include" }),
-          fetch(`/api/groups/${groupId}/debts`, { credentials: "include" }),
-          fetch(`/api/groups/${groupId}/bets`, { credentials: "include" }),
-        ]);
-        const groupData = await groupRes.json();
-        const debtData = await debtRes.json();
-        const betsData = await betsRes.json();
-        const found = groupData.groups?.find((g: any) => g.id === groupId);
-        setGroup(found ?? null);
-        setDebts(debtData.debts ?? []);
-        setMembers(debtData.members ?? []);
-        setBets(betsData.bets ?? []);
+        const res = await fetch(`/api/users/search?q=${encodeURIComponent(searchQuery)}`, { credentials: "include" });
+        if (res.ok) {
+          const data = await res.json();
+          // Filter out existing members
+          const memberIds = members.map((m) => m.userId);
+          setSearchResults((data.users ?? []).filter((u: any) => !memberIds.includes(u.id)));
+        }
       } finally {
-        setLoading(false);
+        setSearching(false);
       }
-    };
-    load();
-  }, [groupId]);
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [searchQuery, members]);
+
+  const addMember = async (userId: string) => {
+    try {
+      const res = await fetch(`/api/groups/${groupId}/members`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId }),
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (!res.ok) { showToast(data.error ?? "Chyba", "error"); return; }
+      showToast(`${data.username} přidán do skupiny!`, "success");
+      setSearchQuery("");
+      setSearchResults([]);
+      setShowAddMember(false);
+      loadData(); // Refresh
+    } catch {
+      showToast("Chyba při přidávání", "error");
+    }
+  };
 
   const copyInviteCode = () => {
     navigator.clipboard.writeText(group.inviteCode);
@@ -109,7 +154,7 @@ export default function GroupDetailPage() {
         {/* Debt overview */}
         <div>
           <h2 style={{ fontFamily: "var(--font-display)", fontSize: "18px", fontWeight: "700", marginBottom: "16px" }}>
-            Dluhový přehled
+            Přehled dluhů
           </h2>
 
           {/* My balance */}
@@ -127,7 +172,7 @@ export default function GroupDetailPage() {
                 {myMember.net >= 0 ? "+" : ""}{myMember.net} Kč
               </div>
               <div style={{ fontSize: "12px", color: "var(--text-muted)", marginTop: "4px" }}>
-                Dluhuji: {myMember.owes} Kč · Dluhují mi: {myMember.owed} Kč
+                Dlužím: {myMember.owes} Kč · Dluží mi: {myMember.owed} Kč
               </div>
             </div>
           )}
@@ -158,9 +203,62 @@ export default function GroupDetailPage() {
 
         {/* Members */}
         <div>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "18px", fontWeight: "700", marginBottom: "16px" }}>
-            Členové
-          </h2>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
+            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "18px", fontWeight: "700" }}>
+              Členové
+            </h2>
+            <button className="btn btn-sm btn-secondary" onClick={() => setShowAddMember(!showAddMember)}>
+              + Přidat
+            </button>
+          </div>
+
+          {/* Add member search */}
+          {showAddMember && (
+            <div className="card" style={{ padding: "14px", marginBottom: "12px" }}>
+              <input
+                className="input"
+                placeholder="Hledat uživatele podle jména nebo e-mailu..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                autoFocus
+              />
+              {searching && (
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "10px", fontSize: "13px", color: "var(--text-muted)" }}>
+                  <div className="spinner" style={{ width: "14px", height: "14px" }} /> Hledám...
+                </div>
+              )}
+              {searchResults.length > 0 && (
+                <div style={{ marginTop: "8px", display: "flex", flexDirection: "column", gap: "4px" }}>
+                  {searchResults.map((u) => (
+                    <div key={u.id} style={{
+                      display: "flex", alignItems: "center", justifyContent: "space-between",
+                      padding: "8px 10px", borderRadius: "6px", background: "var(--surface-3)",
+                    }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <div className="avatar avatar-sm"
+                          style={{ background: u.avatarColor, color: "#000", fontWeight: "700" }}>
+                          {u.username.slice(0, 2).toUpperCase()}
+                        </div>
+                        <div>
+                          <div style={{ fontSize: "13px", fontWeight: "600" }}>{u.username}</div>
+                          <div style={{ fontSize: "11px", color: "var(--text-muted)" }}>{u.email}</div>
+                        </div>
+                      </div>
+                      <button className="btn btn-sm btn-primary" onClick={() => addMember(u.id)}>
+                        Přidat
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {searchQuery.length >= 2 && !searching && searchResults.length === 0 && (
+                <div style={{ marginTop: "10px", fontSize: "13px", color: "var(--text-muted)", textAlign: "center" }}>
+                  Žádný uživatel nenalezen
+                </div>
+              )}
+            </div>
+          )}
+
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             {members.map((member) => (
               <div key={member.userId} className="card" style={{ padding: "12px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
