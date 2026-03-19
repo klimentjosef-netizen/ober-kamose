@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
+import Logo from "@/components/Logo";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -54,24 +55,7 @@ export default function LoginPage() {
 
         {/* Logo */}
         <div style={{ textAlign: "center", marginBottom: "40px" }}>
-          <div style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "10px",
-            marginBottom: "8px",
-          }}>
-            <div style={{
-              width: "40px", height: "40px", borderRadius: "10px",
-              background: "linear-gradient(135deg, #D4AF37, #B8942E)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: "20px",
-            }}>⚽</div>
-            <span style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "24px", fontWeight: "800",
-              color: "var(--text-primary)",
-            }}>Ober Kamoše</span>
-          </div>
+          <Logo size="md" />
           <p style={{ color: "var(--text-muted)", fontSize: "14px" }}>
             Fantasy fotbal se sázkami mezi přáteli
           </p>

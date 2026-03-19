@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
+import Logo from "@/components/Logo";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Přehled", icon: "▦" },
@@ -34,19 +35,7 @@ export default function Sidebar() {
 
       {/* Logo */}
       <div style={{ padding: "0 20px 28px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <div style={{
-            width: "34px", height: "34px", borderRadius: "8px",
-            background: "var(--gold)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: "16px", flexShrink: 0,
-          }}>⚽</div>
-          <span style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "16px", fontWeight: "800",
-            color: "var(--text-primary)",
-          }}>Ober Kamoše</span>
-        </div>
+        <Logo size="sm" />
       </div>
 
       {/* Nav */}

@@ -1,5 +1,3 @@
-import { redirect } from "next/navigation";
+import LandingPage from "@/app/(marketing)/page";
 
-export default function HomePage() {
-  redirect("/dashboard");
-}
+export default LandingPage;

@@ -1,0 +1,17 @@
+<svg width="200" height="56" viewBox="0 0 200 56" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="4" width="48" height="48" rx="12" fill="#D4AF37"/>
+  <ellipse cx="24" cy="26" rx="14" ry="13" fill="#0A0A0A"/>
+  <ellipse cx="13" cy="16" rx="5" ry="6" fill="#0A0A0A"/>
+  <ellipse cx="35" cy="16" rx="5" ry="6" fill="#0A0A0A"/>
+  <ellipse cx="13" cy="16" rx="3" ry="4" fill="#B8942E"/>
+  <ellipse cx="35" cy="16" rx="3" ry="4" fill="#B8942E"/>
+  <circle cx="19" cy="22" r="2.5" fill="#D4AF37"/>
+  <circle cx="29" cy="22" r="2.5" fill="#D4AF37"/>
+  <circle cx="19.8" cy="21.2" r="1" fill="#0A0A0A"/>
+  <circle cx="29.8" cy="21.2" r="1" fill="#0A0A0A"/>
+  <ellipse cx="24" cy="30" rx="7" ry="5" fill="#B8942E"/>
+  <circle cx="21" cy="30" r="1.8" fill="#0A0A0A"/>
+  <circle cx="27" cy="30" r="1.8" fill="#0A0A0A"/>
+  <text x="60" y="24" font-family="Georgia, 'Times New Roman', serif" font-size="16" font-weight="700" fill="#F5F0E8" letter-spacing="-0.3">Ober</text>
+  <text x="60" y="44" font-family="Georgia, 'Times New Roman', serif" font-size="16" font-weight="700" fill="#D4AF37" letter-spacing="-0.3">Kamoše</text>
+</svg>
