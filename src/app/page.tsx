@@ -66,7 +66,7 @@ export default function HomePage() {
               letterSpacing: "0.06em", textTransform: "uppercase",
               marginBottom: "24px",
             }}>
-              Fantasy fotbal pro kamarády
+              Sází všichni kamoši i celá rodina
             </div>
             <h1 style={{
               fontFamily: "var(--font-display)",
@@ -175,7 +175,7 @@ export default function HomePage() {
       {/* ─── FOOTER ─────────────────────────────────────────────────────── */}
       <footer style={{ borderTop: "1px solid rgba(212,175,55,0.07)", padding: "24px 48px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Logo size="sm" />
-        <div style={{ fontSize: "12px", color: "#6B5F4F" }}>© 2025 · Fantasy fotbal pro kamarády</div>
+        <div style={{ fontSize: "12px", color: "#6B5F4F" }}>© 2025 · Sází všichni kamoši i celá rodina</div>
         <div style={{ display: "flex", gap: "20px" }}>
           <Link href="/login" style={{ fontSize: "12px", color: "#6B5F4F", textDecoration: "none" }}>Přihlásit se</Link>
           <Link href="/register" style={{ fontSize: "12px", color: "#D4AF37", textDecoration: "none" }}>Registrace</Link>
