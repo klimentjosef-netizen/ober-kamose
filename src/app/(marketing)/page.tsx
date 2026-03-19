@@ -1,20 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAuthStore } from "@/store/authStore";
 import Logo from "@/components/Logo";
 import Image from "next/image";
 
 export default function LandingPage() {
-  const { user } = useAuthStore();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (user) router.push("/dashboard");
-  }, [user]);
-
   return (
     <div style={{ background: "#0A0A0A", color: "#F5F0E8", minHeight: "100vh", fontFamily: "var(--font-body)" }}>
 
