@@ -94,7 +94,7 @@ export default function GroupDetailPage() {
         <div className="card" style={{ padding: "20px", marginBottom: "24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div>
             <div className="stat-label">Kód pozvánky</div>
-            <div style={{ fontFamily: "var(--font-display)", fontSize: "20px", fontWeight: "700", letterSpacing: "0.1em", color: "var(--green)" }}>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: "20px", fontWeight: "700", letterSpacing: "0.1em", color: "var(--gold)" }}>
               {group.inviteCode}
             </div>
           </div>
@@ -229,7 +229,7 @@ export default function GroupDetailPage() {
                       </div>
                     </div>
                     {bet.amount > 0 && (
-                      <span style={{ fontFamily: "var(--font-display)", fontWeight: "700", color: "var(--green)", fontSize: "15px" }}>
+                      <span style={{ fontFamily: "var(--font-display)", fontWeight: "700", color: "var(--gold)", fontSize: "15px" }}>
                         {bet.amount} Kč
                       </span>
                     )}

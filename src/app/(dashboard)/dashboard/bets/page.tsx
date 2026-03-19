@@ -229,7 +229,7 @@ export default function BetsPage() {
                         display: "flex", alignItems: "center", gap: "10px",
                         padding: "8px 12px", borderRadius: "8px",
                         background: current ? "var(--surface-3)" : "var(--surface-2)",
-                        border: `1px solid ${current ? "rgba(34,197,94,0.2)" : "var(--border)"}`,
+                        border: `1px solid ${current ? "rgba(212,175,55,0.2)" : "var(--border)"}`,
                       }}>
                         <div className="avatar avatar-sm"
                           style={{ background: m.user.avatarColor, color: "#000", fontWeight: "700" }}>
@@ -242,9 +242,9 @@ export default function BetsPage() {
                             style={{
                               padding: "4px 10px", borderRadius: "6px", fontSize: "12px", fontWeight: "600",
                               border: "1px solid",
-                              borderColor: current?.side === side1Label ? "var(--green)" : "var(--border)",
-                              background: current?.side === side1Label ? "var(--green-glow)" : "transparent",
-                              color: current?.side === side1Label ? "var(--green)" : "var(--text-secondary)",
+                              borderColor: current?.side === side1Label ? "var(--gold)" : "var(--border)",
+                              background: current?.side === side1Label ? "var(--gold-glow)" : "transparent",
+                              color: current?.side === side1Label ? "var(--gold)" : "var(--text-secondary)",
                               cursor: "pointer",
                             }}>
                             {side1Label}
@@ -370,7 +370,7 @@ function BetCard({
         {bet.amount > 0 && (
           <div style={{
             fontFamily: "var(--font-display)", fontSize: "20px", fontWeight: "800",
-            color: "var(--green)", whiteSpace: "nowrap", marginLeft: "16px",
+            color: "var(--gold)", whiteSpace: "nowrap", marginLeft: "16px",
           }}>
             {bet.amount} Kč
           </div>
@@ -385,13 +385,13 @@ function BetCard({
           return (
             <div key={sideName} style={{
               padding: "10px 14px", borderRadius: "8px",
-              background: isWinningSide ? "rgba(34,197,94,0.06)" : "var(--surface-3)",
-              border: `1px solid ${isWinningSide ? "rgba(34,197,94,0.2)" : "var(--border)"}`,
+              background: isWinningSide ? "rgba(212,175,55,0.06)" : "var(--surface-3)",
+              border: `1px solid ${isWinningSide ? "rgba(212,175,55,0.2)" : "var(--border)"}`,
             }}>
               <div style={{
                 fontSize: "11px", fontWeight: "700", textTransform: "uppercase",
                 letterSpacing: "0.05em", marginBottom: "8px",
-                color: isWinningSide ? "var(--green)" : "var(--text-muted)",
+                color: isWinningSide ? "var(--gold)" : "var(--text-muted)",
               }}>
                 {sideName} {isWinningSide && "✓"}
               </div>

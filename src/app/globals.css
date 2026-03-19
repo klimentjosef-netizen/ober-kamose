@@ -7,17 +7,34 @@
 :root {
   --font-display: 'Syne', sans-serif;
   --font-body: 'Inter', sans-serif;
+
+  /* Gold accent */
+  --gold: #D4AF37;
+  --gold-light: #E8D48B;
+  --gold-dim: #B8942E;
+  --gold-glow: rgba(212, 175, 55, 0.12);
+
+  /* Surfaces */
+  --bg: #0A0A0A;
+  --surface: #0E0E0E;
+  --surface-2: #161616;
+  --surface-3: #1E1E1E;
+
+  /* Borders */
+  --border: rgba(212, 175, 55, 0.08);
+  --border-hover: rgba(212, 175, 55, 0.18);
+
+  /* Text */
+  --text-primary: #F5F0E8;
+  --text-secondary: #9B8E7B;
+  --text-muted: #6B5F4F;
+
+  /* Status */
+  --success: #22c55e;
+  --danger: #f87171;
+
+  /* Legacy alias — components that still use --green for positive values */
   --green: #22c55e;
-  --green-dim: #16a34a;
-  --green-glow: rgba(34, 197, 94, 0.15);
-  --surface: #111111;
-  --surface-2: #1a1a1a;
-  --surface-3: #222222;
-  --border: rgba(255,255,255,0.07);
-  --border-hover: rgba(255,255,255,0.14);
-  --text-primary: #f5f5f5;
-  --text-secondary: #888888;
-  --text-muted: #555555;
 }
 
 * {
@@ -27,7 +44,7 @@
 }
 
 html {
-  background: #0a0a0a;
+  background: var(--bg);
   color: var(--text-primary);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
@@ -36,7 +53,7 @@ html {
 
 body {
   min-height: 100vh;
-  background: #0a0a0a;
+  background: var(--bg);
 }
 
 /* Scrollbar */
@@ -46,11 +63,11 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
 /* Selection */
-::selection { background: var(--green-glow); color: var(--green); }
+::selection { background: var(--gold-glow); color: var(--gold); }
 
 /* Focus */
 *:focus-visible {
-  outline: 1.5px solid var(--green);
+  outline: 1.5px solid var(--gold);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -58,7 +75,8 @@ body {
 /* Typography */
 .font-display { font-family: var(--font-display); }
 
-/* Cards */
+/* ─── Cards ──────────────────────────────────────────────────────────── */
+
 .card {
   background: var(--surface-2);
   border: 1px solid var(--border);
@@ -66,15 +84,17 @@ body {
 }
 
 .card-hover {
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
 }
 
 .card-hover:hover {
   border-color: var(--border-hover);
   background: var(--surface-3);
+  box-shadow: 0 0 24px var(--gold-glow);
 }
 
-/* Buttons */
+/* ─── Buttons ────────────────────────────────────────────────────────── */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -87,7 +107,7 @@ body {
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 0.2s;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -98,18 +118,21 @@ body {
 }
 
 .btn-primary {
-  background: var(--green);
-  color: #000;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%);
+  color: #0A0A0A;
   padding: 10px 20px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #16c552;
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
   transform: translateY(-1px);
+  box-shadow: 0 4px 16px var(--gold-glow);
 }
 
 .btn-primary:active:not(:disabled) {
   transform: translateY(0);
+  box-shadow: none;
 }
 
 .btn-secondary {
@@ -121,7 +144,7 @@ body {
 
 .btn-secondary:hover:not(:disabled) {
   border-color: var(--border-hover);
-  background: #2a2a2a;
+  background: #252525;
 }
 
 .btn-ghost {
@@ -131,7 +154,7 @@ body {
 }
 
 .btn-ghost:hover:not(:disabled) {
-  color: var(--text-primary);
+  color: var(--gold);
   background: var(--surface-2);
 }
 
@@ -162,7 +185,8 @@ body {
   border-radius: 8px;
 }
 
-/* Inputs */
+/* ─── Inputs ─────────────────────────────────────────────────────────── */
+
 .input {
   width: 100%;
   background: var(--surface-3);
@@ -172,7 +196,7 @@ body {
   font-family: var(--font-body);
   font-size: 14px;
   padding: 10px 14px;
-  transition: border-color 0.15s;
+  transition: border-color 0.2s, box-shadow 0.2s;
   outline: none;
 }
 
@@ -181,8 +205,8 @@ body {
 }
 
 .input:focus {
-  border-color: var(--green);
-  box-shadow: 0 0 0 3px var(--green-glow);
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-glow);
 }
 
 .input-label {
@@ -195,7 +219,8 @@ body {
   letter-spacing: 0.05em;
 }
 
-/* Badge */
+/* ─── Badges ─────────────────────────────────────────────────────────── */
+
 .badge {
   display: inline-flex;
   align-items: center;
@@ -208,9 +233,9 @@ body {
 }
 
 .badge-green {
-  background: var(--green-glow);
-  color: var(--green);
-  border: 1px solid rgba(34,197,94,0.2);
+  background: var(--gold-glow);
+  color: var(--gold);
+  border: 1px solid rgba(212, 175, 55, 0.2);
 }
 
 .badge-gray {
@@ -231,7 +256,8 @@ body {
   border: 1px solid rgba(245,158,11,0.2);
 }
 
-/* Avatar */
+/* ─── Avatar ─────────────────────────────────────────────────────────── */
+
 .avatar {
   display: flex;
   align-items: center;
@@ -248,24 +274,32 @@ body {
 .avatar-lg { width: 48px; height: 48px; font-size: 16px; }
 .avatar-xl { width: 64px; height: 64px; font-size: 22px; }
 
-/* Divider */
+/* ─── Divider ────────────────────────────────────────────────────────── */
+
 .divider {
   height: 1px;
   background: var(--border);
   border: none;
 }
 
-/* Green glow effect */
-.glow-green {
-  box-shadow: 0 0 20px var(--green-glow);
+/* ─── Glow ───────────────────────────────────────────────────────────── */
+
+.glow-gold {
+  box-shadow: 0 0 24px var(--gold-glow);
 }
 
-/* Stat card */
+/* ─── Stat card ──────────────────────────────────────────────────────── */
+
 .stat-card {
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 16px;
+  transition: border-color 0.2s;
+}
+
+.stat-card:hover {
+  border-color: var(--border-hover);
 }
 
 .stat-label {
@@ -286,10 +320,15 @@ body {
 }
 
 .stat-value-green {
-  color: var(--green);
+  color: var(--success);
 }
 
-/* Toast */
+.stat-value-gold {
+  color: var(--gold);
+}
+
+/* ─── Toast ──────────────────────────────────────────────────────────── */
+
 .toast {
   position: fixed;
   bottom: 24px;
@@ -306,7 +345,7 @@ body {
   white-space: nowrap;
 }
 
-.toast-success { border-color: rgba(34,197,94,0.3); color: var(--green); }
+.toast-success { border-color: rgba(212, 175, 55, 0.3); color: var(--gold); }
 .toast-error { border-color: rgba(239,68,68,0.3); color: #f87171; }
 
 @keyframes toastIn {
@@ -314,39 +353,44 @@ body {
   to   { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
-/* Loading spinner */
+/* ─── Spinner ────────────────────────────────────────────────────────── */
+
 .spinner {
   width: 20px;
   height: 20px;
   border: 2px solid var(--surface-3);
-  border-top-color: var(--green);
+  border-top-color: var(--gold);
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
 }
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Animations */
+/* ─── Animations ─────────────────────────────────────────────────────── */
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.fade-in { animation: fadeIn 0.2s ease forwards; }
+.fade-in { animation: fadeIn 0.25s ease forwards; }
 
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.slide-up { animation: slideUp 0.3s ease forwards; }
+.slide-up { animation: slideUp 0.35s ease forwards; }
 
-/* Noise texture overlay */
-.noise::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, var(--gold-dim) 0%, var(--gold-light) 50%, var(--gold-dim) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
 }

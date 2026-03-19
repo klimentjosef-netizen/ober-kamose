@@ -58,9 +58,9 @@ export default function DraftScreen() {
             {players.map((p) => (
               <div key={p.playerIndex} style={{
                 padding: "6px 12px", borderRadius: "20px", fontSize: "13px", fontWeight: "600",
-                background: p.playerIndex === currentDrafter ? "var(--green-glow)" : "var(--surface-2)",
-                border: `1px solid ${p.playerIndex === currentDrafter ? "rgba(34,197,94,0.3)" : "var(--border)"}`,
-                color: p.playerIndex === currentDrafter ? "var(--green)" : "var(--text-secondary)",
+                background: p.playerIndex === currentDrafter ? "var(--gold-glow)" : "var(--surface-2)",
+                border: `1px solid ${p.playerIndex === currentDrafter ? "rgba(212,175,55,0.3)" : "var(--border)"}`,
+                color: p.playerIndex === currentDrafter ? "var(--gold)" : "var(--text-secondary)",
               }}>
                 {p.username}
               </div>
@@ -70,7 +70,7 @@ export default function DraftScreen() {
 
         {/* Progress */}
         <div style={{ height: "4px", background: "var(--surface-3)", borderRadius: "2px" }}>
-          <div style={{ height: "100%", width: `${progress}%`, background: "var(--green)", borderRadius: "2px", transition: "width 0.3s" }} />
+          <div style={{ height: "100%", width: `${progress}%`, background: "var(--gold)", borderRadius: "2px", transition: "width 0.3s" }} />
         </div>
       </div>
 
@@ -101,8 +101,8 @@ export default function DraftScreen() {
                   onClick={() => isMyTurn && handlePick(idx)}
                   style={{
                     padding: "10px 12px", borderRadius: "8px",
-                    border: `1px solid ${isPending ? "var(--green)" : "var(--border)"}`,
-                    background: isPending ? "var(--green-glow)" : "var(--surface-2)",
+                    border: `1px solid ${isPending ? "var(--gold)" : "var(--border)"}`,
+                    background: isPending ? "var(--gold-glow)" : "var(--surface-2)",
                     cursor: isMyTurn ? "pointer" : "default",
                     transition: "all 0.12s",
                     transform: isPending ? "scale(1.01)" : "scale(1)",
@@ -111,7 +111,7 @@ export default function DraftScreen() {
                   <div style={{ fontSize: "11px", color: "var(--text-muted)" }}>{player.team}</div>
                   <div style={{ fontSize: "11px", color: "var(--text-secondary)", marginTop: "2px" }}>{player.position}</div>
                   {isPending && (
-                    <div style={{ marginTop: "8px", background: "var(--green)", color: "#000", borderRadius: "4px", padding: "4px 8px", fontSize: "11px", fontWeight: "700", textAlign: "center" }}>
+                    <div style={{ marginTop: "8px", background: "var(--gold)", color: "#000", borderRadius: "4px", padding: "4px 8px", fontSize: "11px", fontWeight: "700", textAlign: "center" }}>
                       Potvrdit pick ✓
                     </div>
                   )}

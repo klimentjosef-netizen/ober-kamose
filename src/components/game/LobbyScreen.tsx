@@ -42,7 +42,7 @@ export default function LobbyScreen() {
             Lobby
           </div>
           <h1 style={{ fontFamily: "var(--font-display)", fontSize: "32px", fontWeight: "800" }}>
-            Místnost <span style={{ color: "var(--green)" }}>{roomCode}</span>
+            Místnost <span style={{ color: "var(--gold)" }}>{roomCode}</span>
           </h1>
         </div>
         <div style={{ display: "flex", gap: "8px" }}>
@@ -82,8 +82,8 @@ export default function LobbyScreen() {
                   style={{
                     display: "flex", alignItems: "center", justifyContent: "space-between",
                     padding: "12px 16px", borderRadius: "8px",
-                    border: `1px solid ${selected ? "rgba(34,197,94,0.3)" : "var(--border)"}`,
-                    background: selected ? "rgba(34,197,94,0.06)" : "var(--surface-2)",
+                    border: `1px solid ${selected ? "rgba(212,175,55,0.3)" : "var(--border)"}`,
+                    background: selected ? "rgba(212,175,55,0.06)" : "var(--surface-2)",
                     cursor: isHost ? "pointer" : "default",
                     transition: "all 0.15s",
                   }}>
@@ -98,8 +98,8 @@ export default function LobbyScreen() {
                   </div>
                   <div style={{
                     width: "20px", height: "20px", borderRadius: "50%",
-                    border: `1.5px solid ${selected ? "var(--green)" : "var(--border)"}`,
-                    background: selected ? "var(--green)" : "transparent",
+                    border: `1.5px solid ${selected ? "var(--gold)" : "var(--border)"}`,
+                    background: selected ? "var(--gold)" : "transparent",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     fontSize: "11px", color: "#000", flexShrink: 0,
                   }}>
@@ -154,7 +154,7 @@ export default function LobbyScreen() {
                   )}
                   <div style={{
                     width: "6px", height: "6px", borderRadius: "50", marginLeft: "auto",
-                    background: p.isOnline ? "var(--green)" : "var(--text-muted)",
+                    background: p.isOnline ? "var(--gold)" : "var(--text-muted)",
                   }} />
                 </div>
               ))}
@@ -184,7 +184,7 @@ export default function LobbyScreen() {
                 </div>
               ))}
               {settings.customBetDescription && (
-                <div style={{ marginTop: "6px", padding: "8px", background: "var(--surface-3)", borderRadius: "6px", fontSize: "12px", color: "var(--green)" }}>
+                <div style={{ marginTop: "6px", padding: "8px", background: "var(--surface-3)", borderRadius: "6px", fontSize: "12px", color: "var(--gold)" }}>
                   🎯 {settings.customBetDescription}
                 </div>
               )}
@@ -194,7 +194,7 @@ export default function LobbyScreen() {
           {/* Share */}
           <div className="card" style={{ padding: "18px", textAlign: "center" }}>
             <div style={{ fontSize: "12px", color: "var(--text-muted)", marginBottom: "8px" }}>Pozvánka</div>
-            <div style={{ fontFamily: "var(--font-display)", fontSize: "36px", fontWeight: "800", letterSpacing: "0.15em", color: "var(--green)", marginBottom: "10px" }}>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: "36px", fontWeight: "800", letterSpacing: "0.15em", color: "var(--gold)", marginBottom: "10px" }}>
               {roomCode}
             </div>
             <button className="btn btn-secondary btn-sm" style={{ width: "100%" }}

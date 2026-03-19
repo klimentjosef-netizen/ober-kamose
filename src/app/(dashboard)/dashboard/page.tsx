@@ -82,8 +82,8 @@ export default function DashboardPage() {
       {/* Net balance */}
       {!loading && (totalDebt + totalOwed > 0) && (
         <div style={{
-          background: net >= 0 ? "rgba(34,197,94,0.06)" : "rgba(239,68,68,0.06)",
-          border: `1px solid ${net >= 0 ? "rgba(34,197,94,0.15)" : "rgba(239,68,68,0.15)"}`,
+          background: net >= 0 ? "rgba(212,175,55,0.04)" : "rgba(239,68,68,0.06)",
+          border: `1px solid ${net >= 0 ? "rgba(212,175,55,0.12)" : "rgba(239,68,68,0.15)"}`,
           borderRadius: "12px", padding: "16px 20px", marginBottom: "32px",
           display: "flex", alignItems: "center", justifyContent: "space-between",
         }}>

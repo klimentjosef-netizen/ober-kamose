@@ -37,7 +37,7 @@ export default function Sidebar() {
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <div style={{
             width: "34px", height: "34px", borderRadius: "8px",
-            background: "var(--green)",
+            background: "var(--gold)",
             display: "flex", alignItems: "center", justifyContent: "center",
             fontSize: "16px", flexShrink: 0,
           }}>⚽</div>
@@ -88,7 +88,7 @@ export default function Sidebar() {
             >
               <span style={{
                 fontSize: "16px",
-                color: active ? "var(--green)" : "inherit",
+                color: active ? "var(--gold)" : "inherit",
                 lineHeight: 1,
               }}>{item.icon}</span>
               {item.label}
@@ -97,7 +97,7 @@ export default function Sidebar() {
                   marginLeft: "auto",
                   width: "4px", height: "4px",
                   borderRadius: "50%",
-                  background: "var(--green)",
+                  background: "var(--gold)",
                 }} />
               )}
             </Link>

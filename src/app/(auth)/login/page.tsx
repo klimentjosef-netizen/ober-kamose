@@ -48,7 +48,7 @@ export default function LoginPage() {
       alignItems: "center",
       justifyContent: "center",
       padding: "24px",
-      background: "radial-gradient(ellipse at 50% 0%, rgba(34,197,94,0.06) 0%, transparent 60%)",
+      background: "radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.04) 0%, transparent 60%)",
     }}>
       <div style={{ width: "100%", maxWidth: "400px" }} className="slide-up">
 
@@ -62,7 +62,7 @@ export default function LoginPage() {
           }}>
             <div style={{
               width: "40px", height: "40px", borderRadius: "10px",
-              background: "var(--green)",
+              background: "linear-gradient(135deg, #D4AF37, #B8942E)",
               display: "flex", alignItems: "center", justifyContent: "center",
               fontSize: "20px",
             }}>⚽</div>
@@ -143,7 +143,7 @@ export default function LoginPage() {
           color: "var(--text-secondary)",
         }}>
           Nemáš účet?{" "}
-          <Link href="/register" style={{ color: "var(--green)", textDecoration: "none", fontWeight: "600" }}>
+          <Link href="/register" style={{ color: "var(--gold)", textDecoration: "none", fontWeight: "600" }}>
             Zaregistruj se
           </Link>
         </p>
