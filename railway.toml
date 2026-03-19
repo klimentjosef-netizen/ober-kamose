@@ -4,6 +4,6 @@ builder = "nixpacks"
 [deploy]
 startCommand = "npx tsx server.ts"
 healthcheckPath = "/"
-healthcheckTimeout = 30
+healthcheckTimeout = 120
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
