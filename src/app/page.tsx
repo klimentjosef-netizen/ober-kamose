@@ -52,7 +52,7 @@ export default function HomePage() {
               alt="Ober Kamoše maskot"
               width={420}
               height={420}
-              style={{ width: "100%", maxWidth: "420px", height: "auto", filter: "drop-shadow(0 20px 60px rgba(212,175,55,0.25))" }}
+              style={{ width: "100%", maxWidth: "420px", height: "auto", filter: "drop-shadow(0 20px 60px rgba(212,175,55,0.25))", mixBlendMode: "lighten" }}
               priority
             />
           </div>
