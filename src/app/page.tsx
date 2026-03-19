@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Logo from "@/components/Logo";
-import Image from "next/image";
+import MascotHero from "@/components/MascotHero";
 
 export default function HomePage() {
   return (
@@ -47,14 +47,7 @@ export default function HomePage() {
           gap: "48px", alignItems: "center",
         }}>
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <Image
-              src="/mascot.png"
-              alt="Ober Kamoše maskot"
-              width={420}
-              height={420}
-              style={{ width: "100%", maxWidth: "420px", height: "auto", filter: "drop-shadow(0 20px 60px rgba(212,175,55,0.25))", mixBlendMode: "lighten" }}
-              priority
-            />
+            <MascotHero />
           </div>
           <div>
             <div style={{
