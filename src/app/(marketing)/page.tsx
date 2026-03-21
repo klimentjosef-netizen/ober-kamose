@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Logo from "@/components/Logo";
-import Image from "next/image";
+import MascotHero from "@/components/MascotHero";
 
 export default function LandingPage() {
   return (
@@ -49,14 +49,7 @@ export default function LandingPage() {
 
           {/* Left — mascot */}
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <Image
-              src="/mascot.png"
-              alt="Ober Kamoše maskot"
-              width={420}
-              height={420}
-              style={{ width: "100%", maxWidth: "420px", height: "auto", filter: "drop-shadow(0 20px 60px rgba(212,175,55,0.25))" }}
-              priority
-            />
+            <MascotHero />
           </div>
 
           {/* Right — text + CTA */}
@@ -79,7 +72,7 @@ export default function LandingPage() {
               fontWeight: "800", lineHeight: "1.05",
               letterSpacing: "-0.02em", marginBottom: "20px",
             }}>
-              Vsaďte se.<br />
+              Zahrajte si.<br />
               <span style={{ color: "#D4AF37" }}>Draftujte.<br />Sledujte.</span>
             </h1>
 
@@ -98,9 +91,9 @@ export default function LandingPage() {
             }}>
               Dva módy:{" "}
               <span style={{ color: "#D4AF37" }}>čuník</span>
-              {" "}(průběžné sázení za každý gól) nebo{" "}
-              <span style={{ color: "#D4AF37" }}>klasická sázka</span>
-              {" "}(vítěz bere vše).
+              {" "}(průběžná odměna za každý gól) nebo{" "}
+              <span style={{ color: "#D4AF37" }}>výzva vítězi</span>
+              {" "}(vítěz dostane odměnu).
             </p>
 
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
@@ -137,7 +130,7 @@ export default function LandingPage() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px", maxWidth: "900px", margin: "0 auto" }}>
           {[
             { n: "01", title: "Vytvoř skupinu", desc: "Pozvi kamarády přes odkaz nebo kód. Všichni vidí společný přehled dluhů." },
-            { n: "02", title: "Spusť hru", desc: "Vyber reálné zápasy. Nastav sázku za gól — nebo vsaď celou hru najednou." },
+            { n: "02", title: "Spusť hru", desc: "Vyber reálné zápasy. Nastav odměnu za gól — nebo nastav odměnu pro vítěze." },
             { n: "03", title: "Draftuj hráče", desc: "Střídavě si vybírejte hráče ze soupisk. Snake draft zajistí férovost." },
             { n: "04", title: "Sleduj a plať", desc: "Každý gól tvých hráčů vydělává. Čuník nebo klasika — ty rozhoduješ." },
           ].map((s) => (
@@ -165,22 +158,22 @@ export default function LandingPage() {
               Čuník
             </div>
             <p style={{ fontSize: "13px", color: "#9B8E7B", lineHeight: "1.6", marginBottom: "16px" }}>
-              Za každý gól tvých hráčů platí soupeř do společného fondu. Průběžné napětí po celou hru. Na konci se vyúčtuje kdo dal víc.
+              Za každý gól tvých hráčů ti kamarád dluží do společného fondu. Průběžné napětí po celou hru. Na konci se vyúčtuje kdo dal víc.
             </p>
             <div style={{ fontSize: "12px", color: "#6B5F4F" }}>
-              Příklad: gól = 50 Kč · 3 góly = soupeř platí 150 Kč
+              Příklad: gól = 50 Kč · 3 góly = kamarád ti dluží 150 Kč
             </div>
           </div>
           <div style={{ background: "#161616", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "12px", padding: "28px 24px" }}>
             <div style={{ fontSize: "32px", marginBottom: "12px" }}>🏆</div>
             <div style={{ fontFamily: "var(--font-display)", fontSize: "20px", fontWeight: "800", marginBottom: "8px" }}>
-              Klasická sázka
+              Výzva vítězi
             </div>
             <p style={{ fontSize: "13px", color: "#9B8E7B", lineHeight: "1.6", marginBottom: "16px" }}>
               Dohodněte se na částce předem. Kdo má víc gólů na konci hry, vyhrává celou sumu. Jednoduché a jasné.
             </p>
             <div style={{ fontSize: "12px", color: "#6B5F4F" }}>
-              Příklad: sázka 500 Kč · vítěz bere vše
+              Příklad: výzva 500 Kč · vítěz dostane odměnu
             </div>
           </div>
         </div>
@@ -198,7 +191,7 @@ export default function LandingPage() {
           {[
             { icon: "⚽", title: "Reálné zápasy", desc: "Premier League, La Liga, Champions League. Aktualizace každý týden." },
             { icon: "🐍", title: "Snake draft", desc: "Férový výběr hráčů pro 2–8 hráčů. Automatický los kdo začíná." },
-            { icon: "🎲", title: "Vlastní sázky", desc: "Vsaď se o cokoli mimo draft — výsledek zápasu, pivní kolo, cokoliv." },
+            { icon: "🎲", title: "Vlastní výzvy", desc: "Zahrajte si o cokoli mimo draft — výsledek zápasu, pivní kolo, cokoliv." },
             { icon: "💰", title: "Dluhový přehled", desc: "Kdo komu dluží po každé hře. Čistá bilance přes celou sezónu." },
             { icon: "📊", title: "Statistiky", desc: "Nejúspěšnější hráči, historické hry, finanční bilance." },
             { icon: "👥", title: "Skupiny přátel", desc: "Jedna skupina, všichni vidí stejné dluhy a historii." },

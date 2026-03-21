@@ -33,7 +33,7 @@ export default function Logo({ size = "md", variant = "full" }: LogoProps) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: size === "lg" ? 14 : 10 }}>
       <Icon />
-      <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1 }}>
+      <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
         <span style={{
           fontFamily: "Georgia, 'Times New Roman', serif",
           fontSize: ts,
